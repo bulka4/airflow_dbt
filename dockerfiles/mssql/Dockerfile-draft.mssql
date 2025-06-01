@@ -1,0 +1,35 @@
+# Use official Microsoft SQL Server 2019 image
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+# Set environment variables required for SQL Server to start
+ENV ACCEPT_EULA=Y
+ENV SA_PASSWORD=<your_password>
+
+# add this path to the PATH environment variable so we can use the sqlcmd command in the container
+# instead of /opt/mssql-tools/bin/sqlcmd
+ENV PATH="/opt/mssql-tools/bin:${PATH}"
+
+USER root
+# Install curl, gnupg, and mssql-tools
+RUN mkdir -p /var/lib/apt/lists/partial && apt-get clean && \
+    apt-get update && \
+    apt-get install -y curl apt-transport-https gnupg2 && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copy the SQL script for setting up a SQL db into the container
+COPY init.sql /usr/config/init.sql
+
+# Copy the sql_server_start.sh script into the container
+COPY sql_server_start.sh /sql_server_start.sh
+
+# Expose SQL Server port
+EXPOSE 1433
+
+USER mssql
+# Run the sql_server_start.sh bash script which will start the MS SQL Server, run the init.sql script in it, 
+# then use the 'wait' command so the container doesn't exit but it runs all the time.
+CMD ["/sql_server_start.sh"]

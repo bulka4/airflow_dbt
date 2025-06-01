@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: products
+    description: "Information about products"
+    columns:
+      - name: productID
+        description: "Unique identifier of a product"
+        tests:
+          - unique
+          - not_null
+      - name: price
+        description: "Price of the product."
+      - name: productName
+        description: "Name of the product."
+      - name: productCategory
+        description: "Category of the product."
+    
+  - name: clients
+    description: "Information about clients"
+    columns:
+      - name: clientID
+        description: "Unique identifier of a given client."
+        tests:
+          - unique
+          - not_null
+      - name: clientName
+        description: "Name of the client."
+      - name: clientCountry
+        description: "Country of the client."

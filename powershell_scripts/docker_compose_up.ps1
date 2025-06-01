@@ -1,0 +1,1 @@
+docker-compose up 2>&1 | Tee-Object -FilePath dockerfiles/docker_logs/logs.txt

@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: orders
+    description: "Fact table containing order-level data for analytics"
+    columns:
+      - name: clientID
+        description: "ID of the client who made an order"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('clients')
+              field: clientID
+      - name: productID
+        description: "ID of the ordered product"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('products')
+              field: productID
+      - name: quantity
+        description: "Quantity of ordered products."
+      - name: totalPrice
+        description: "Total price for a given order."
+
+  - name: clientsRevenue
+    description: "Fact table showing a total revenue per client."
+    columns:
+      - name: clientID
+        description: "ID of the client for which we calculate a revenue."
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('clients')
+              field: clientID
+      - name: revenue
+        description: "Revenue for a given client."
+
+  - name: productsRevenue
+    description: "Fact table showing a total revenue per product."
+    columns:
+      - name: productID
+        description: "ID of the product for which we calculate a revenue."
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('products')
+              field: productID
+      - name: revenue
+        description: "Revenue for a given product."

@@ -1,0 +1,122 @@
+version: 2
+
+sources:
+  - name: system_1
+    database: source_systems
+    schema: system_1
+    description: "Raw data from the system_1"
+    tables:
+      - name: purchase_orders
+        description: "Orders placed by clients"
+        columns:
+          - name: orderID
+            description: "Unique identifier for an order"
+          - name: clientID
+            description: "ID of a client who made an order. Foreign key to the clients table"
+            tests:
+              - relationships:
+                  to: source('system_1', 'clients')
+                  field: clientID
+
+      - name: purchase_orders_details
+        description: "Details of orders placed by clients."
+        columns:
+          - name: orderDetailID
+            description: "Unique identifier"
+          - name: orderID
+            description: "Foreign key to the purchase_orders table"
+            tests:
+              - relationships:
+                  to: source('system_1', 'purchase_orders')
+                  field: orderID
+          - name: productID
+            description: "ID of the ordered product"
+            tests:
+              - relationships:
+                  to: source('system_1', 'products')
+                  field: productID
+          - name: quantity
+            description: "Ordered quantity of a given product."
+
+      - name: products
+        description: "Information about products"
+        columns:
+          - name: productID
+            description: "Unique identifier of a product"
+          - name: price
+            description: "Price of the product."
+          - name: productName
+            description: "Name of the product."
+          - name: productCategory
+            description: "Category of the product."
+      
+      - name: clients
+        description: "Information about clients"
+        columns:
+          - name: clientID
+            description: "Unique identifier of a given client."
+          - name: clientName
+            description: "Name of the client."
+          - name: clientCountry
+            description: "Country of the client."
+
+
+  - name: system_2
+    database: source_systems
+    schema: system_2
+    description: "Raw data from the system_2"
+    tables:
+      - name: purchase_orders
+        description: "Orders placed by clients"
+        columns:
+          - name: orderID
+            description: "Unique identifier for an order"
+          - name: clientID
+            description: "ID of a client who made an order. Foreign key to the clients table"
+            tests:
+              - relationships:
+                  to: source('system_2', 'clients')
+                  field: clientID
+
+      - name: purchase_orders_details
+        description: "Details of orders placed by clients."
+        columns:
+          - name: orderDetailID
+            description: "Unique identifier"
+          - name: orderID
+            description: "Foreign key to the purchase_orders table"
+            tests:
+              - relationships:
+                  to: source('system_2', 'purchase_orders')
+                  field: orderID
+          - name: productID
+            description: "ID of the ordered product"
+            tests:
+              - relationships:
+                  to: source('system_2', 'products')
+                  field: productID
+          - name: quantity
+            description: "Ordered quantity of a given product."
+
+      - name: products
+        description: "Information about products"
+        columns:
+          - name: productID
+            description: "Unique identifier of a product"
+          - name: price
+            description: "Price of the product."
+          - name: productName
+            description: "Name of the product."
+          - name: productCategory
+            description: "Category of the product."
+      
+      - name: clients
+        description: "Information about clients"
+        columns:
+          - name: clientID
+            description: "Unique identifier of a given client."
+          - name: clientName
+            description: "Name of the client."
+          - name: clientCountry
+            description: "Country of the client."
+      
