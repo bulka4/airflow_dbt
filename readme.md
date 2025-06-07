@@ -4,6 +4,8 @@ This app is using Airflow and Astronomer Cosmos in order to run dbt code for per
 In order to run the app we need to start Docker on our machine and run the command:
 >docker compose up
 
+That will run the Airflow app and also create and configure the MS SQL server.
+
 In the below sections we can find a description of how this app works and what functionalities it provides.
 
 ## DAGs
