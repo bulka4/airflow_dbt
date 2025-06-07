@@ -1,9 +1,10 @@
-# Running the app
+# Introduction
+This app is using Airflow and Astronomer Cosmos in order to run dbt code for performing data transformations in MS SQL server. 
+
 In order to run the app we need to start Docker on our machine and run the command:
 >docker compose up
 
-# App description
-This app is the Airflow app which is running dbt code for performing data transformations in MS SQL. Here is a brief description of how this app works and what functionalities it provides.
+In the below sections we can find a description of how this app works and what functionalities it provides.
 
 ## DAGs
 We have here two dags:
@@ -12,15 +13,15 @@ We have here two dags:
 
 The dbt_dag dag creates the entire dag just for perfmorming data transformations using dbt.
 
-The dbt_task_group dag creates a task group for perfmorming data transformations using dbt. We can use that if we want to have other activities as well in our dag.
+The dbt_task_group dag creates a task group for perfmorming data transformations using dbt. We can use that if we want to have additional activities in our dag except for dbt.
 
 ## dbt project
-dbt project with code which we will be executing in Airflow is in the dbt folder.
+dbt project with code which we will be executing in Airflow is in the dbt folder. We have defined there models, snapshots (as YAML files) and macros.
 
 # App prerequisites
 Before we run this app we need to:
 - **Install Docker** - which will be running our app in containers
-- **Set up a password for MS SQL server** - We do that in the dockerfiles/mssql/Dockerfile.mssql file. More info below in the 'MS SQL setup' section. Also we need to add this password to the dbt/data_warehouse/profiles.yml file like described in the 'dbt project configuration' section below.
+- **Set up a password for MS SQL server** - We do that in the dockerfiles/mssql/Dockerfile.mssql file. More info below in the 'MS SQL setup with Docker' section. Also we need to add this password to the dbt/data_warehouse/profiles.yml file like described in the 'dbt project configuration' section below.
 
 # dbt with Airflow - materials
 Materials about running dbt with Airflow:
@@ -34,7 +35,7 @@ Materials about running dbt with Airflow:
 # dbt project configuration
 We need to add the profiles.yml file to the dbt/data_warehouse folder where we specify the database in which we will be performing data transformations. For creating that file we can use the dbt/data_warehouse/profiles-draft.yml file which is a draft of the YAML file we need to prepare. We just need to provide there a password for connecting to the MS SQL server.
 
-In that file we need to provide the password which will be used for connecting to the created MS SQL server. We set up that password in the Dockerfile what is described in the previous section of this documentation 'MS SQL setup'.
+In that file we need to provide the password which will be used for connecting to the created MS SQL server. We set up that password in the Dockerfile what is described in the next section of this documentation 'MS SQL setup with Docker'.
 
 In the profiles.yml file we are also specifying a name of the ODBC driver which dbt will use to connect to the MS SQL server. That is the driver which we were installing in Airflow containers as described in the 'ODBC driver installation' section of this documentation. 
 
