@@ -1,0 +1,12 @@
+version: 2
+
+snapshots:
+  - name: system_2_products_snapshot
+    relation: source('system_2', 'products')
+    config:
+      alias: products_snapshot
+      unique_key: productID
+      strategy: check
+      check_cols:
+        - productName
+        - productCategory

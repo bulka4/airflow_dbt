@@ -18,6 +18,7 @@ RUN \
 RUN python -m venv dbt_venv && source dbt_venv/bin/activate && \
     # changing the PIP_USER value is needed to use pip install in a virtual environment
     export PIP_USER= && \
+    pip install --no-cache-dir dbt-core==1.9.1 && \
     pip install --no-cache-dir dbt-sqlserver && deactivate && \
     export PIP_USER="true"
 

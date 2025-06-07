@@ -1,10 +1,18 @@
 create database source_systems;
+create database [02_Transformed];
 create database dwh;
 go
 
 use dwh;
 go
 create schema fact;
+go
+
+use [02_Transformed];
+go
+create schema system_1;
+go
+create schema system_2;
 go
 
 use source_systems;
@@ -132,7 +140,7 @@ create table system_2.clients(
     ,clientCountry varchar(50)
 );
 
-insert into system_1.clients (clientID, clientName, clientCountry)
+insert into system_2.clients (clientID, clientName, clientCountry)
 values
     (1, 'A', 'Poland')
     ,(2, 'B', 'UK')

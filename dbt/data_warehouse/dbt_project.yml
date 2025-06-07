@@ -31,12 +31,23 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   data_warehouse:
-    # Config indicated by + and applies to all files under models/example/
+    # Set up configs for models from the dwh_fact and dwh_dim folders.
     dwh_fact:
-      +database: dwh
-      +schema: fact
-      +materialized: table
+      +database: dwh # database where models will be saved.
+      +schema: fact # schema where models will be saved.
+      +materialized: table # How to save models. It can be 'table' or a 'view'.
     dwh_dim:
       +database: dwh
       +schema: dim
       +materialized: table
+
+# settings for snapshots
+snapshots:
+  data_warehouse:
+    02_Transformed_system_1: # set up configs for all snapshots from the 02_Transformed_system_1 folder.
+      +database: 02_Transformed # database where snapshots will be saved.
+      +target_schema: system_1 # schema where snapshots will be saved.
+    02_Transformed_system_2:
+      +database: 02_Transformed
+      +target_schema: system_2
+      

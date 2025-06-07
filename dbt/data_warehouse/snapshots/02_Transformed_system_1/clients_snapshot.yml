@@ -1,0 +1,10 @@
+snapshots:
+  - name: system_1_clients_snapshot
+    relation: source('system_1', 'clients')
+    config:
+      alias: clients_snapshot
+      unique_key: clientID
+      strategy: check
+      check_cols:
+        - clientName
+        - clientCountry
